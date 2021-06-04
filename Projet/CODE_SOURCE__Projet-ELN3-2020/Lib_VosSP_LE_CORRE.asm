@@ -11,7 +11,8 @@ $include (Proj_ELN3.inc)
 ;******************************************************************************
 ;Declaration des variables et fonctions publiques
 ;******************************************************************************
-
+PUBLIC   _CDE_Display
+PUBLIC	 _CDE_Barr
 ;******************************************************************************
 ;Declaration des variables et fonctions Externes
 ;******************************************************************************
@@ -41,7 +42,82 @@ ProgSP_base      segment  CODE
 ; de sous-programme dans le fichier Base_SP.asm
 ; Ne pas oublier d'importer la déclaration Public qui va avec....
 
+;  SP6 -- _CDE_Display  
+;
+; Description: 
+;
+; Paramètres d'entrée:  R6 (MSB)- R7 (LSB) – Adresse du périphérique de sortie Registre AFF
+; Paramètre d’entrée :  R5 – Code 7 segments (Bit 0-Segment a __ Bit6-Segment g)
+; Paramètre d’entrée :  R3 – Commande de sélection du digit : 
+;                       si R3= 0, Sélection du Digit Dizaines, 
+;                       si R3 non nul : Sélection    du digit Unités
+; Valeur retournée: R7 : contient une recopie de la valeur envoyée au registre AFF 
+; Registres modifiés: aucun
 
+_CDE_Display:
+
+		PUSH ACC ; Sauvegarde de ACC dans pile
+		PUSH PSW;
+		CLR A;
+		MOV DPL,R7;
+		MOV DPH,R6;
+		MOV A,R5;
+		CJNE R3,#00h,non_nul; Compare la valeur de R3 avec 0, jump si ce n'est pas egal
+		CLR ACC.7;
+		MOVX @DPTR, A;
+		MOV R7, A;
+		
+		POP ACC;
+		;RET;
+		non_nul: 
+		SETB ACC.7;
+		MOVX @DPTR, A;
+		MOV R7, A;
+		POP ACC;
+		RET;
+		
+		
+		
+
+;******************************************************************************                
+;  SP9 -- _CDE_Barr
+;
+; Description: 
+;
+; Paramètres d'entrée:  R6 (MSB)- R7 (LSB) – Adresse du périphérique de sortie 
+;                                            (Registre MISC en XDATA)
+; Paramètre d’entrée :  R5 – 0 : barrière fermée, != Barrière ouverte
+;                      
+; Valeur retournée: R7 : contient une recopie de la valeur envoyée au registre MISC
+;                       
+; Registres modifiés: aucun	
+
+_CDE_Barr:
+		
+		PUSH ACC ; Sauvegarde de ACC dans pile
+		PUSH PSW;
+		CLR A;
+		MOV DPL,R7; On met les poids faibles dans R7
+		MOV DPH,R6; On met les poids forts dans R6
+		MOV A,R5;
+		CJNE R5,#00h,non_nul; Compare la valeur de R5 avec 0, jump si ce n'est pas egal
+		
+		CLR ACC.2;	Clear bit 2 de ACC
+		MOVX @DPTR, A;
+		MOV R7, A;
+		
+		POP ACC;
+		RET;
+		non_nul_2: SETB ACC.2;	Incrémente le bit 2 de ACC
+		MOVX @DPTR, A;
+		MOV R7, A;
+		POP ACC;
+		RET;
+		
+		
+
+
+;		
 END
 
 

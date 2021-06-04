@@ -6,18 +6,18 @@ SP:
 3 X Axel
 4 X Axel
 5 X Alexis
-6 / Sarah
+6 X Sarah
 7 X Axel
-8 Guillaume
-9 / Sarah
+8 X Guillaume
+9 X Sarah
 10 Sarah
 11 Sarah
 12 Sarah
-13 Axel
-14
-15
-16
-17
-18
-19
-20
+13 X Axel
+14 X Guillaume
+15 X Alexis
+16 X Axel
+17 X Alexis
+18 X Axel
+19 X Axel
+20 / Axel

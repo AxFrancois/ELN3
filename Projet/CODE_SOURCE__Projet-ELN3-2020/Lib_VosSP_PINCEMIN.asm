@@ -13,6 +13,8 @@ $include (Proj_ELN3.inc)
 
 PUBLIC   _Read_code
 PUBLIC   _Decod_BCD_to_7Seg
+PUBLIC   _Gestion_RTC
+PUBLIC   _Concat_String
 ;******************************************************************************
 
 ;******************************************************************************
@@ -114,6 +116,155 @@ _Decod_BCD_to_7Seg:
 			  POP ACC
 			  POP PSW
               RET
+
+
+;  SP15 --_Gestion_RTC     
+;
+; Description: 
+;
+; Paramètres d'entrée:  R7  – Adresse en IDATA de la variable RTC_Centiemes
+;                                            
+;                      
+; Valeur retournée: aucune
+;                       
+;                       
+; Registres modifiés: aucun
+;******************************************************************************    
+
+_Gestion_RTC:
+              PUSH AR7
+			  PUSH ACC
+			  PUSH AR0
+			  
+			  bcl: MOV AR0, AR7
+				   MOV A, @R0
+				   CJNE A, #64H , inc_centiemes
+			  
+			  inc_centiemes:
+			  INC @R0
+			  MOV A, @R0
+			  CJNE A, #64H , inc_centiemes
+			  
+			  SUBB A, #64H
+			  JZ reset_centiemes
+			  
+			  reset_centiemes:
+			  CLR A
+			  MOV @R0, A
+			  INC R0
+			  ljmp inc_secondes
+			  
+			  inc_secondes:
+			  INC @R0
+			  MOV A, @R0
+			  CJNE A,#3CH , inc_secondes
+			  
+			  SUBB A, #3CH
+			  JZ reset_secondes
+			  
+			  reset_secondes:
+			  CLR A
+			  MOV @R0, A
+			  INC R0
+			  ljmp inc_minutes
+			  
+			  
+			  inc_minutes:
+			  INC @R0
+			  MOV A, @R0
+			  CJNE A,#3CH , inc_minutes
+			  
+			  SUBB A, #3CH
+			  JZ reset_minutes
+			  
+			  reset_minutes:
+			  CLR A
+			  MOV @R0, A
+			  
+			  
+			  POP AR0
+			  POP ACC
+			  POP AR7
+              RET
+			  
+;  SP17 -- _Concat_String   
+;
+; Description: 
+;
+; Paramètres d'entrée:  R6 (MSB)- R7 (LSB) - – Adresse de la chaine 1 en XDATA
+;                       R4 (MSB)- R5 (LSB) - – Adresse de la chaine 2 en XDATA
+;                       R2 (MSB)- R3 (LSB) - – Adresse de la chaine produite (1+2) en XDATA
+;                      
+; Valeur retournée: aucune
+;                       
+;                       
+; Registres modifiés: aucun
+;******************************************************************************    
+
+_Concat_String:
+              PUSH PSW; on incremente la pille
+			  PUSH ACC
+			  PUSH DPL
+			  PUSH DPH
+			  PUSH AR0
+			  
+			chaine_1: 
+				MOV DPH, R6; adresse de la chaine 1 
+				MOV DPL, R7
+				MOVX A, @DPTR
+				
+				INC DPTR
+				MOV R6, DPH
+				MOV R7, DPL
+				
+				JNZ  chaine1_1_2
+				JZ  chaine_2
+			
+			
+			chaine1_1_2:
+				MOV DPH, R2; adresse de la chaine 1 
+				MOV DPL, R3
+				MOVX @DPTR, A
+				
+				INC DPTR
+				MOV R2, DPH
+				MOV R3, DPL
+				
+				jmp chaine_1
+		
+					
+			  chaine_2: 
+				MOV DPH, R4; adresse de la chaine 1 
+				MOV DPL, R5
+				MOVX A, @DPTR
+				
+				INC DPTR
+				MOV R4, DPH
+				MOV R5, DPL
+				JNZ  chaine2_1_2
+				JZ  ajout_zeros
+				
+			chaine2_1_2:
+				MOV DPH, R2; adresse de la chaine 1 
+				MOV DPL, R3
+				MOVX @DPTR, A
+				
+				INC DPTR
+				MOV R2, DPH
+				MOV R3, DPL
+				
+				jmp chaine_2
+			
+			ajout_zeros:
+				CLR A
+				MOVX @DPTR, A
+			  POP DPH
+			  POP DPL
+			  POP ACC
+			  POP PSW
+              RET
+
+
 
 ;******************************************************************************    
 

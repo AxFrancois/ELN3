@@ -133,20 +133,36 @@ Main:
 	;MOV R7,#0CCH
 	;call _Decod_BIN_to_BCD
 	
-	MOV R6,#High Tab_code
-	MOV R7,#Low Tab_code
-	MOV R5,#38H
-	call _Test_Code_Acces
+	;MOV R6,#High Tab_code
+	;MOV R7,#Low Tab_code
+	;MOV R5,#38H
+	;call _Test_Code_Acces
 	
-	MOV R6,#High Tab_code
-	MOV R7,#Low Tab_code
-	MOV R5,#0FH 	;bug ici : ne trouve pas le bon index (21, expected 01)
-	call _Test_Code_Acces
+	;MOV R6,#High Tab_code
+	;MOV R7,#Low Tab_code
+	;MOV R5,#0FH 	;bug ici : ne trouve pas le bon index (21, expected 01)
+	;call _Test_Code_Acces
 	
-	MOV R6,#High Tab_code
-	MOV R7,#Low Tab_code
-	MOV R5,#0FFH	;ne s'arrète pas, à verif
-	call _Test_Code_Acces
+	;MOV R6,#High Tab_code
+	;MOV R7,#Low Tab_code
+	;MOV R5,#0FFH	;ne s'arrète pas, à verif
+	;call _Test_Code_Acces
+
+	;MOV R6,#80H
+	;MOV R7,#00H
+	;call _Read_IR_Detect	
+	
+	;MOV R7,#80h
+	;MOV R4,#0h
+	;MOV R5,#0h
+	;call _RTC_to_ASCII
+	
+	MOV R6,#00H
+	MOV R7,#00H
+	call _Send_STR_To_Terminal
+	
+	;MOV R7,#4eh
+	;call _Conv_ItoA
 
     ; Démo - Echo de caractère reçu sur l'UART
 	 call Getchar_UART0

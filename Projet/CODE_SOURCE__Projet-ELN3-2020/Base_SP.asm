@@ -22,13 +22,13 @@ PUBLIC	 _CDE_Barr
 PUBLIC   _CDE_FeuRouge
 PUBLIC   _CDE_FeuVert
 PUBLIC   _Read_BP_Alarm
-PUBLIC   _Read_IR_Detect
+;PUBLIC   _Read_IR_Detect
 PUBLIC   _Read_DP_1TO16
 PUBLIC   _Gestion_RTC
-PUBLIC   _RTC_to_ASCII
+;PUBLIC   _RTC_to_ASCII
 PUBLIC   _Concat_String
-PUBLIC	 _Send_STR_To_Terminal
-PUBLIC	 _Conv_ItoA
+;PUBLIC	 _Send_STR_To_Terminal
+;PUBLIC	 _Conv_ItoA
 PUBLIC   _Conv_Tab
 PUBLIC   _Tri_Tab_histo
 PUBLIC   _Extract_Tab_histo
