@@ -1,0 +1,277 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP +3.3V
+D Power symbol creates a global label with name "+3.3V"
+K power-flag
+$ENDCMP
+#
+$CMP +3V3
+D Power symbol creates a global label with name "+3V3"
+K power-flag
+$ENDCMP
+#
+$CMP 2764
+D REPROM 8Ko
+K REPROM 8KO
+$ENDCMP
+#
+$CMP 27C64
+D REPROM 8Ko
+K REPROM 8KO
+$ENDCMP
+#
+$CMP 7400
+D quad 2-input NAND gate
+K TTL nand 2-input
+F http://www.ti.com/lit/gpn/sn7400
+$ENDCMP
+#
+$CMP 7402
+D quad 2-input NOR gate
+K TTL Nor2
+F http://www.ti.com/lit/gpn/sn7402
+$ENDCMP
+#
+$CMP 7402_copy
+D quad 2-input NOR gate
+K TTL Nor2
+F http://www.ti.com/lit/gpn/sn7402
+$ENDCMP
+#
+$CMP 74AHC04
+D Hex Inverter
+K AHCMOS not inv
+F https://assets.nexperia.com/documents/data-sheet/74AHC_AHCT04.pdf
+$ENDCMP
+#
+$CMP 74AHC04_copy
+D Hex Inverter
+K AHCMOS not inv
+F https://assets.nexperia.com/documents/data-sheet/74AHC_AHCT04.pdf
+$ENDCMP
+#
+$CMP 74AHCT04
+D Hex Inverter
+K AHCTMOS not inv
+F https://assets.nexperia.com/documents/data-sheet/74AHC_AHCT04.pdf
+$ENDCMP
+#
+$CMP 74AHCT04_copy
+D Hex Inverter
+K AHCTMOS not inv
+F https://assets.nexperia.com/documents/data-sheet/74AHC_AHCT04.pdf
+$ENDCMP
+#
+$CMP 74HC00
+D quad 2-input NAND gate
+K HCMOS nand 2-input
+F http://www.ti.com/lit/gpn/sn74hc00
+$ENDCMP
+#
+$CMP 74HC02
+D quad 2-input NOR gate
+K HCMOS Nor2
+F http://www.ti.com/lit/gpn/sn74hc02
+$ENDCMP
+#
+$CMP 74HC02_copy
+D quad 2-input NOR gate
+K HCMOS Nor2
+F http://www.ti.com/lit/gpn/sn74hc02
+$ENDCMP
+#
+$CMP 74HC04
+D Hex Inverter
+K HCMOS not inv
+F https://assets.nexperia.com/documents/data-sheet/74HC_HCT04.pdf
+$ENDCMP
+#
+$CMP 74HC04_copy
+D Hex Inverter
+K HCMOS not inv
+F https://assets.nexperia.com/documents/data-sheet/74HC_HCT04.pdf
+$ENDCMP
+#
+$CMP 74HC08
+D Quad And2
+K TTL and2
+$ENDCMP
+#
+$CMP 74HC08_copy
+D Quad And2
+K TTL and2
+$ENDCMP
+#
+$CMP 74HC138
+D Decoder 3 to 8 (active low outputs)
+$ENDCMP
+#
+$CMP 74HC245
+D Octal BUS Transceivers, 3-State outputs
+K HCMOS BUS 3State
+F http://www.ti.com/lit/gpn/sn74HC245
+$ENDCMP
+#
+$CMP 74HC573_Compact
+D 8 bits Latch 3 state Out
+K TTL DFF DFF8 LATCH 3State
+F 74xx/74hc573.pdf
+$ENDCMP
+#
+$CMP 74HC86
+D Quad 2-input XOR
+K TTL XOR2
+F http://www.ti.com/lit/gpn/sn74HC86
+$ENDCMP
+#
+$CMP 74HCT00
+D quad 2-input NAND gate
+K HCTMOS nand 2-input
+F http://www.ti.com/lit/gpn/sn74hct00
+$ENDCMP
+#
+$CMP 74HCT02
+D quad 2-input NOR gate
+K HCTMOS Nor2
+F http://www.ti.com/lit/gpn/sn74hct02
+$ENDCMP
+#
+$CMP 74HCT02_copy
+D quad 2-input NOR gate
+K HCTMOS Nor2
+F http://www.ti.com/lit/gpn/sn74hct02
+$ENDCMP
+#
+$CMP 74HCT04
+D Hex Inverter
+K HCTMOS not inv
+F https://assets.nexperia.com/documents/data-sheet/74HC_HCT04.pdf
+$ENDCMP
+#
+$CMP 74HCT04_copy
+D Hex Inverter
+K HCTMOS not inv
+F https://assets.nexperia.com/documents/data-sheet/74HC_HCT04.pdf
+$ENDCMP
+#
+$CMP 74LS00
+D quad 2-input NAND gate
+K TTL nand 2-input
+F http://www.ti.com/lit/gpn/sn74ls00
+$ENDCMP
+#
+$CMP 74LS02
+D quad 2-input NOR gate
+K TTL Nor2
+F http://www.ti.com/lit/gpn/sn74ls02
+$ENDCMP
+#
+$CMP 74LS02_copy
+D quad 2-input NOR gate
+K TTL Nor2
+F http://www.ti.com/lit/gpn/sn74ls02
+$ENDCMP
+#
+$CMP 74LS04
+D Hex Inverter
+K TTL not inv
+F http://www.ti.com/lit/gpn/sn74LS04
+$ENDCMP
+#
+$CMP 74LS08
+D Quad And2
+K TTL and2
+F http://www.ti.com/lit/gpn/sn74LS08
+$ENDCMP
+#
+$CMP 74LS09
+D Quad 2-input AND Open Collect
+K TTL and2 OpenCol
+F http://www.ti.com/lit/gpn/sn74LS09
+$ENDCMP
+#
+$CMP 74LS09_copy
+D Quad 2-input AND Open Collect
+K TTL and2 OpenCol
+F http://www.ti.com/lit/gpn/sn74LS09
+$ENDCMP
+#
+$CMP 74LS138
+D Decoder 3 to 8 (active low outputs)
+K TTL DECOD DECOD8
+$ENDCMP
+#
+$CMP 74LS245
+D Octal BUS Transceivers, 3-State outputs
+K TTL BUS 3State
+F http://www.ti.com/lit/gpn/sn74LS245
+$ENDCMP
+#
+$CMP 74LS28
+D quad 2-input NOR buffer NRND
+K TTL Nor2 Buffer
+F http://eeshop.unl.edu/pdf/74ls28.pdf
+$ENDCMP
+#
+$CMP 74LS28_copy
+D quad 2-input NOR buffer NRND
+K TTL Nor2 Buffer
+F http://eeshop.unl.edu/pdf/74ls28.pdf
+$ENDCMP
+#
+$CMP 74LS32
+D Quad 2-input OR
+K TTL Or2
+F http://www.ti.com/lit/gpn/sn74LS32
+$ENDCMP
+#
+$CMP 74LS37
+D quad 2-input NAND buffer
+K TTL nand 2-input buffer
+F http://www.ti.com/lit/gpn/sn74ls37
+$ENDCMP
+#
+$CMP 74LS573
+D 8 bits Latch 3 state Out
+K TTL DFF DFF8 LATCH 3State
+F 74xx/74hc573.pdf
+$ENDCMP
+#
+$CMP 74LS86
+D Quad 2-input XOR
+K TTL XOR2
+F 74xx/74ls86.pdf
+$ENDCMP
+#
+$CMP AND16
+D Quad And2
+K TTL and2
+F http://www.ti.com/lit/gpn/sn74LS08
+$ENDCMP
+#
+$CMP C
+D Condensateur non polarise
+$ENDCMP
+#
+$CMP GND
+D Power symbol creates a global label with name "GND" , ground
+K power-flag
+$ENDCMP
+#
+$CMP INV
+D Hex Inverter
+K TTL not inv
+F http://www.ti.com/lit/gpn/sn74LS04
+$ENDCMP
+#
+$CMP LED
+K LED
+$ENDCMP
+#
+$CMP SW_DIP_x08
+D 8x DIP Switch, Single Pole Single Throw (SPST) switch, small symbol
+K dip switch
+F ~
+$ENDCMP
+#
+#End Doc Library
