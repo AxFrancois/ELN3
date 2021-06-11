@@ -1,5 +1,6 @@
-schéma TO DO
+schéma X
 
+Main : TO DO
 SP:
 1 X Alexis
 2 X Axel
@@ -10,9 +11,9 @@ SP:
 7 X Axel
 8 X Guillaume
 9 X Sarah
-10 Sarah
-11 Sarah
-12 Sarah
+10 X Alexis
+11 X Guillaume
+12 X Sarah
 13 X Axel
 14 X Guillaume
 15 X Alexis
@@ -20,4 +21,4 @@ SP:
 17 X Alexis
 18 X Axel
 19 X Axel
-20 / Axel
+20 X Axel

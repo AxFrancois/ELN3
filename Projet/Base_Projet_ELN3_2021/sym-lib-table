@@ -1,3 +1,4 @@
 (sym_lib_table
   (lib (name 00_ELN3_Symbols)(type Legacy)(uri ${KIPRJMOD}/00_ELN3_Symbols.lib)(options "")(descr ""))
+  (lib (name Base_Projet_ELN3-rescue)(type Legacy)(uri ${KIPRJMOD}/Base_Projet_ELN3-rescue.lib)(options "")(descr ""))
 )

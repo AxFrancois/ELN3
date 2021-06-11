@@ -15,6 +15,7 @@ PUBLIC   _Read_code
 PUBLIC   _Decod_BCD_to_7Seg
 PUBLIC   _Gestion_RTC
 PUBLIC   _Concat_String
+PUBLIC   _CDE_FeuRouge
 ;******************************************************************************
 
 ;******************************************************************************
@@ -135,12 +136,16 @@ _Gestion_RTC:
               PUSH AR7
 			  PUSH ACC
 			  PUSH AR0
+			  PUSH AR1
 			  
-			  bcl: MOV AR0, AR7
-				   MOV A, @R0
-				   CJNE A, #64H , inc_centiemes
+			  MOV AR0, AR7
+			  MOV A, @R0
+			  INC A
+			  MOV AR1, AR0
 			  
 			  inc_centiemes:
+			  MOV AR0, AR1
+
 			  INC @R0
 			  MOV A, @R0
 			  CJNE A, #64H , inc_centiemes
@@ -157,7 +162,7 @@ _Gestion_RTC:
 			  inc_secondes:
 			  INC @R0
 			  MOV A, @R0
-			  CJNE A,#3CH , inc_secondes
+			  CJNE A,#3CH , inc_centiemes
 			  
 			  SUBB A, #3CH
 			  JZ reset_secondes
@@ -172,7 +177,7 @@ _Gestion_RTC:
 			  inc_minutes:
 			  INC @R0
 			  MOV A, @R0
-			  CJNE A,#3CH , inc_minutes
+			  CJNE A,#3CH , inc_centiemes
 			  
 			  SUBB A, #3CH
 			  JZ reset_minutes
@@ -181,7 +186,7 @@ _Gestion_RTC:
 			  CLR A
 			  MOV @R0, A
 			  
-			  
+			  POP AR1
 			  POP AR0
 			  POP ACC
 			  POP AR7
@@ -206,7 +211,6 @@ _Concat_String:
 			  PUSH ACC
 			  PUSH DPL
 			  PUSH DPH
-			  PUSH AR0
 			  
 			chaine_1: 
 				MOV DPH, R6; adresse de la chaine 1 
@@ -258,15 +262,59 @@ _Concat_String:
 			ajout_zeros:
 				CLR A
 				MOVX @DPTR, A
+				
+				
 			  POP DPH
 			  POP DPL
 			  POP ACC
 			  POP PSW
               RET
 
-
-
+;  SP10 -- _CDE_FeuRouge 
+;
+; Description: 
+;
+; Paramètres d'entrée:  R6 (MSB)- R7 (LSB) – Adresse du périphérique de sortie 
+;                                            (Registre MISC en XDATA)
+; Paramètre d’entrée :  : R5 – =0 --> feu éteint, !=0 --> feu allumé
+;                      
+; Valeur retournée: R7 : contient une recopie de la valeur envoyée au registre MISC
+;                       
+; Registres modifiés: aucun
 ;******************************************************************************    
+
+_CDE_FeuRouge:
+
+			  PUSH ACC
+			  PUSH PSW
+	
+			  
+              MOV DPH, R6
+			  MOV DPL, R7
+			  MOV A, R5
+			  
+			  JZ feu_eteint
+			 	  
+			  feu_allume:
+			  MOVX A, @DPTR
+			  SETB ACC.0
+			  MOVX @DPTR, A
+			  MOV R7,A
+			  jmp retour
+			  
+			  feu_eteint:
+			  MOVX A, @DPTR
+			  CLR ACC.0
+			  MOVX @DPTR, A
+			  MOV R7,A
+			  
+			  retour:
+			  
+			  POP PSW
+			  POP ACC
+              RET
+;****************************************************************************** 
+
 
 
 END

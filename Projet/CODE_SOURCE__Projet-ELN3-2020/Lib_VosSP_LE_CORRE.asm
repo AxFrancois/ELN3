@@ -13,6 +13,7 @@ $include (Proj_ELN3.inc)
 ;******************************************************************************
 PUBLIC   _CDE_Display
 PUBLIC	 _CDE_Barr
+PUBLIC   _Read_BP_Alarm
 ;******************************************************************************
 ;Declaration des variables et fonctions Externes
 ;******************************************************************************
@@ -57,23 +58,33 @@ ProgSP_base      segment  CODE
 _CDE_Display:
 
 		PUSH ACC ; Sauvegarde de ACC dans pile
-		PUSH PSW;
-		CLR A;
-		MOV DPL,R7;
-		MOV DPH,R6;
-		MOV A,R5;
-		CJNE R3,#00h,non_nul; Compare la valeur de R3 avec 0, jump si ce n'est pas egal
-		CLR ACC.7;
-		MOVX @DPTR, A;
-		MOV R7, A;
+		PUSH PSW
+		PUSH DPL
+		PUSH DPH
 		
-		POP ACC;
-		;RET;
+		CLR A
+		MOV DPL,R7
+		MOV DPH,R6
+		MOV A,R5
+		CJNE R3,#00h,non_nul; Compare la valeur de R3 avec 0, jump si ce n'est pas egal
+		CLR ACC.7
+		MOVX @DPTR, A
+		MOV R7, A
+		
+		JMP fin_display
+	
+		
 		non_nul: 
-		SETB ACC.7;
-		MOVX @DPTR, A;
-		MOV R7, A;
-		POP ACC;
+		SETB ACC.7
+		MOVX @DPTR, A
+		MOV R7, A
+		
+		fin_display:
+		POP DPH
+		POP DPL
+		POP PSW
+		POP ACC
+		
 		RET;
 		
 		
@@ -95,28 +106,72 @@ _CDE_Display:
 _CDE_Barr:
 		
 		PUSH ACC ; Sauvegarde de ACC dans pile
-		PUSH PSW;
-		CLR A;
+		PUSH PSW
+		PUSH DPL
+		PUSH DPH
+		
+		CLR A
+		
 		MOV DPL,R7; On met les poids faibles dans R7
 		MOV DPH,R6; On met les poids forts dans R6
-		MOV A,R5;
-		CJNE R5,#00h,non_nul; Compare la valeur de R5 avec 0, jump si ce n'est pas egal
+		MOV A,R5
+		CJNE A,#00h,non_nul_barr; Compare la valeur de A avec 0, jump si ce n'est pas egal
 		
 		CLR ACC.2;	Clear bit 2 de ACC
-		MOVX @DPTR, A;
-		MOV R7, A;
+		MOVX @DPTR, A
+		MOV R7, A
+		JMP fin_CDE_Barr
 		
-		POP ACC;
-		RET;
-		non_nul_2: SETB ACC.2;	Incrémente le bit 2 de ACC
-		MOVX @DPTR, A;
-		MOV R7, A;
-		POP ACC;
-		RET;
+		non_nul_barr: 
+		SETB ACC.2;	Passe à 1 le bit 2 de ACC
+		MOVX @DPTR, A
+		MOV R7, A
 		
+		fin_CDE_Barr:
 		
+		POP DPH
+		POP DPL
+		POP PSW
+		POP ACC
+		RET
+
+;******************************************************************************                
+;  SP12 -- _Read_BP_Alarm  
+;
+; Description: 
+;
+; Paramètres d'entrée:  R6 (MSB)- R7 (LSB) – Adresse du périphérique d'entrée 
+;                                            (Registre GDD en XDATA)
+;                      
+; Valeur retournée: Bit C (Bit Carry) du registre PSW: 0 si bouton non activé, 
+;                                                      1 si bouton pressé
+;                       
+; Registres modifiés: aucun	
 
 
+_Read_BP_Alarm:
+
+		PUSH ACC ; Sauvegarde de ACC dans pile
+		PUSH PSW
+		PUSH DPL
+		PUSH DPH
+		
+		CLR A
+		MOV DPL,R7; On met les poids faibles dans R7
+		MOV DPH,R6; On met les poids forts dans R6
+		
+		MOVX A,@dptr 
+		ANL A,#00100000
+		JZ BP_Alarm_0 ;Jump si accumulateur est à 0
+		SETB C; Passe le bit de carry a 1
+		
+		JMP fin_BP_Alarm
+		
+		BP_Alarm_0:
+		CLR C
+		fin_BP_Alarm:
+		
+		RET
 ;		
 END
 

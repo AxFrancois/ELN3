@@ -14,7 +14,8 @@ $include (Proj_ELN3.inc)
 
 PUBLIC   _Stockage_Code
 PUBLIC   _Read_DP_1TO16
-	
+PUBLIC   _CDE_FeuVert
+
 ;******************************************************************************
 ;Declaration des variables et fonctions Externes
 ;******************************************************************************
@@ -165,7 +166,45 @@ Inc_CLK:
 			  POP PSW
               RET
 ;****************************************************************************** 
+;******************************************************************************                
+;  SP11 -- _CDE_FeuVert 
+;
+; Description: 
+;
+; Paramètres d'entrée:  R6 (MSB)- R7 (LSB) – Adresse du périphérique de sortie 
+;                                            (Registre MISC en XDATA)
+; Paramètre d’entrée :  : R5 – =0 --> feu éteint, !=0 --> feu allumé
+;                      
+; Valeur retournée: R7 : contient une recopie de la valeur envoyée au registre MISC
+;                       
+; Registres modifiés: aucun
+;******************************************************************************    
 
+_CDE_FeuVert:
+              PUSH PSW
+			  PUSH ACC
+			  
+			  MOV DPL,R7
+			  MOV DPH,R6
+			  
+			  MOVX A,@DPTR
+			  CJNE R5, #00H, _not_zero
+			  
+			  CLR ACC.1
+			  MOV R7, A
+			  MOVX @DPTR,A
+			  POP ACC
+			  POP PSW
+			  RET
+
+_not_zero:    SETB ACC.1
+			  MOV R7, A
+			  MOVX @DPTR,A
+			  POP ACC
+			  POP PSW
+			  RET
+			  
+;****************************************************************************** 
 ; INSERER les codes des spous-programmes ici en allant récupérer les squelettes
 ; de sous-programme dans le fichier Base_SP.asm
 ; Ne pas oublier d'importer la déclaration Public qui va avec....
