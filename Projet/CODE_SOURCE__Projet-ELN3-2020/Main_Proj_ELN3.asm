@@ -157,12 +157,19 @@ Main:
 	;MOV R5,#0h
 	;call _RTC_to_ASCII
 	
-	MOV R6,#00H
-	MOV R7,#00H
-	call _Send_STR_To_Terminal
+	;MOV R6,#00H
+	;MOV R7,#00H
+	;call _Send_STR_To_Terminal
 	
 	;MOV R7,#4eh
 	;call _Conv_ItoA
+	
+	;MOV R7,#0h
+	;MOV R6,#10h
+	;MOV R5,#0h
+	;MOV R2,#20h
+	;MOV R3,#00h
+	;call _Conv_Tab
 
     ; Démo - Echo de caractère reçu sur l'UART
 	 call Getchar_UART0

@@ -11,7 +11,15 @@ $include (Proj_ELN3.inc)
 ;******************************************************************************
 ;Declaration des variables et fonctions publiques
 ;******************************************************************************
-
+PUBLIC _Read_Park_IN
+PUBLIC _Read_Park_OUT
+PUBLIC _Decod_BIN_to_BCD
+public _Test_Code_Acces
+public _Read_IR_Detect
+public _RTC_to_ASCII
+public _Send_STR_To_Terminal
+public _Conv_ItoA
+public _Conv_Tab
 ;******************************************************************************
 ;Declaration des variables et fonctions Externes
 ;******************************************************************************
@@ -22,14 +30,6 @@ Extrn code  (MSG_Park_Fire,MSG_Start_System,MSG_Tab_Code,MSG_Tab_histo)
 Extrn code	(MSG_CODE_Nombre,MSG_Free_Places,MSG_Space,MSG_Free,MSG_Occupied)
 Extrn xdata (Tab_histo)
 Extrn idata (RTC_Centiemes,RTC_Secondes,RTC_Minutes)
-PUBLIC _Read_Park_IN
-PUBLIC _Read_Park_OUT
-PUBLIC _Decod_BIN_to_BCD
-public _Test_Code_Acces
-public _Read_IR_Detect
-public _RTC_to_ASCII
-public _Send_STR_To_Terminal
-public _Conv_ItoA
 ;-----------------------------------------------------------------------------
 ; EQUATES
 ;-----------------------------------------------------------------------------
@@ -48,6 +48,18 @@ ProgSP_base      segment  CODE
 ; INSERER les codes des spous-programmes ici en allant récupérer les squelettes
 ; de sous-programme dans le fichier Base_SP.asm
 ; Ne pas oublier d'importer la déclaration Public qui va avec....
+
+;****************************************************************************** 
+;****************************************************************************** 
+;******************************************************************************                
+; SP2 -- _Read_Park_IN
+;
+; Description: 
+;
+; Paramètres d'entrée:  R6 (MSB)- R7 (LSB) – Adresse du périphérique d’entrée GDD
+; Valeur retournée: Bit Carry  0: pas de détection / 1: véhicule détecté 
+; Registres modifiés: aucun
+;******************************************************************************    
 
 _Read_Park_IN:
 	PUSH DPH
@@ -72,6 +84,18 @@ _Read_Park_IN:
 	
 	ret
 	
+;****************************************************************************** 
+;****************************************************************************** 
+;******************************************************************************                
+;  SP3 -- _Read_Park_OUT
+;
+; Description: 
+;
+; Paramètres d'entrée:  R6 (MSB)- R7 (LSB) – Adresse du périphérique d’entrée GDD
+; Valeur retournée: Bit Carry  0: pas de détection / 1: véhicule détecté 
+; Registres modifiés: aucun
+;******************************************************************************    
+
 _Read_Park_OUT:
 	PUSH DPH
 	PUSH DPL
@@ -95,6 +119,19 @@ _Read_Park_OUT:
 	
 	ret
 	
+;****************************************************************************** 
+;****************************************************************************** 
+;******************************************************************************                
+;  SP4 -- _Decod_BIN_to_BCD 
+;
+; Description: 
+;
+; Paramètres d'entrée:  R7  – Valeur binaire 8 bits à convertir 
+; Valeur retournée: R7 - Code BCD 2 X 4  
+;                   si valeur d’entrée <= 63H sinon valeur retournée : FFH. 
+; Registres modifiés: aucun
+;******************************************************************************   
+
 _Decod_BIN_to_BCD:
 	PUSH ACC
 	PUSH AR5
@@ -151,6 +188,22 @@ _Decod_BIN_to_BCD:
 	POP ACC
 
 	ret
+	
+;****************************************************************************** 
+;****************************************************************************** 
+;******************************************************************************                
+;  SP7 -- _Test_Code_Acces  
+;
+; Description: 
+;
+; Paramètres d'entrée:  R6 (MSB)- R7 (LSB) – Adresse de Tab_code (Mémoire CODE)
+; Paramètre d’entrée :  R5 – Code 6 bits à vérifier (code sur 6 bit de pds faible, 
+;                        les 2 bits de pds fort doivent être rendus inopérants,
+;                        et donc mis à zéro)
+; Valeur retournée: R7 : non nul, il retourne la position du code trouvé dans la table,
+;                        nul, il indique que le code n’a pas été trouvé dans la table.
+; Registres modifiés: aucun
+;******************************************************************************  
 
 _Test_Code_Acces:
 	PUSH DPH
@@ -192,7 +245,22 @@ _Test_Code_Acces:
 	POP DPH
 	
 	ret
-	
+
+;****************************************************************************** 
+;****************************************************************************** 
+;******************************************************************************                
+;  SP13 --  _Read_IR_Detect   
+;
+; Description: 
+;
+; Paramètres d'entrée:  R6 (MSB)- R7 (LSB) – Adresse du périphérique de d'entrée 
+;                                            (Registre GDD en XDATA)
+;                      
+; Valeur retournée: R7 : contient la valeur des capteurs 
+;                        (sur les 4 bits de poids faible).. 
+;                       
+; Registres modifiés: aucun
+;******************************************************************************    
 _Read_IR_Detect:
 	PUSH DPH
 	PUSH DPL
@@ -210,7 +278,23 @@ _Read_IR_Detect:
 	POP DPH
 	
 	ret
-	
+
+;****************************************************************************** 
+;****************************************************************************** 
+;******************************************************************************                
+;  SP16 -- _RTC_to_ASCII  
+;
+; Description: 
+;
+; Paramètres d'entrée:  R7 -  Adresse en IDATA de la variable RTC_Secondes 
+;                       R4 (MSB)- R5 (LSB) - – Adresse de la chaine produite en XDATA
+;                      
+; Valeur retournée: aucune
+;                       
+;                       
+; Registres modifiés: aucun
+;******************************************************************************    
+
 _RTC_to_ASCII:
 	PUSH DPH
 	PUSH DPL
@@ -329,6 +413,22 @@ _RTC_to_ASCII:
 	
 	ret
 
+;****************************************************************************** 
+;****************************************************************************** 
+;******************************************************************************                
+;  SP18 -- _Send_STR_To_Terminal  
+;
+; Description: 
+;
+; Paramètres d'entrée:  R6 (MSB)- R7 (LSB) - Adresse de la chaine à transmettre
+;                                              (stockée en XDATA)                                    
+;                      
+; Valeur retournée: aucune
+;                       
+;                       
+; Registres modifiés: aucun
+;******************************************************************************    
+
 _Send_STR_To_Terminal:
 	PUSH DPH
 	PUSH DPL
@@ -349,6 +449,22 @@ _Send_STR_To_Terminal:
 	POP DPH
 	
 	ret
+
+;****************************************************************************** 
+;****************************************************************************** 
+;******************************************************************************                
+;  SP19 -- _Conv_ItoA   
+;
+; Description: 
+;
+; Paramètres d'entrée:  R7 - – Valeur à convertir
+;                                            
+;                      
+; Valeur retournée: R7 code ASCII des unités
+;                   R6 code ASCII des dizaines    
+;                       
+; Registres modifiés: aucun
+;******************************************************************************   
 
 _Conv_ItoA:
 	PUSH ACC
@@ -387,6 +503,24 @@ _Conv_ItoA:
 	
 	ret
 
+;****************************************************************************** 
+;****************************************************************************** 
+;******************************************************************************                
+;  SP20 -- _Conv_Tab   
+;
+; Description: 
+;
+; Paramètres d'entrée:  R6 (MSB)- R7 (LSB) Adresse de la table de valeur à convertir
+;                       R5 : Indique l’espace mémoire sur lequel pointe l’adresse
+;                            passée en R6-R7 R5 = 0 --> XDATA,  R5 !=0  --> CODE
+;                       R2 (MSB)- R3 (LSB) - – Adresse de la chaine produite en XDATA                     
+;                      
+; Valeur retournée: aucune
+;                       
+;                       
+; Registres modifiés: aucun
+;******************************************************************************  
+
 _Conv_Tab:
 	PUSH DPH
 	PUSH DPL
@@ -399,14 +533,15 @@ _Conv_Tab:
 	mov DPL,R7
 	
 	;lecture du nombre d'éléments dans le tableau
-	CJNE R5,#0h,DansCode1:
+	CJNE R5,#0h,DansCode1
 	;DansXdata1
 	MOVX A,@DPTR
-	JMP 
+	JMP NbElement
 	DansCode1:
 	MOV A,#0h
 	MOVC A,@A+DPTR
 	
+	NbElement:
 	;on stock le nombre d'élément dans R4
 	MOV R4,A
 	
@@ -418,15 +553,17 @@ _Conv_Tab:
 	mov R6,DPH
 	mov R7,DPL
 	
-	CJNE R5,#0h,DansCode2:
+	CJNE R5,#0h,DansCode2
 	;DansXdata1
 	MOVX A,@DPTR
-	JMP 
+	JMP Conversion
 	DansCode2:
 	MOV A,#0h
 	MOVC A,@A+DPTR
 	
+	
 	;conversion binaire to bcd
+	Conversion:
 	
 	CLR C
 	DizaineConvTab:

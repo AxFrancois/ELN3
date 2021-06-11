@@ -10,26 +10,26 @@ $INCLUDE(Proj_ELN3.INC)
 ;******************************************************************************
 ;Declaration des variables et fonctions publiques
 ;******************************************************************************
-PUBLIC   _Read_code
+;;PUBLIC   _Read_code
 ;PUBLIC   _Read_Park_IN
 ;PUBLIC   _Read_Park_OUT
 ;PUBLIC   _Decod_BIN_to_BCD
-PUBLIC   _Decod_BCD_to_7Seg
-PUBLIC   _CDE_Display
+;;PUBLIC   _Decod_BCD_to_7Seg
+;;PUBLIC   _CDE_Display
 ;PUBLIC   _Test_Code_Acces
-PUBLIC   _Stockage_Code
-PUBLIC	 _CDE_Barr
-PUBLIC   _CDE_FeuRouge
-PUBLIC   _CDE_FeuVert
-PUBLIC   _Read_BP_Alarm
+;;PUBLIC   _Stockage_Code
+;;PUBLIC	 _CDE_Barr
+;;PUBLIC   _CDE_FeuRouge
+;;PUBLIC   _CDE_FeuVert
+;;PUBLIC   _Read_BP_Alarm
 ;PUBLIC   _Read_IR_Detect
-PUBLIC   _Read_DP_1TO16
-PUBLIC   _Gestion_RTC
+;;PUBLIC   _Read_DP_1TO16
+;;PUBLIC   _Gestion_RTC
 ;PUBLIC   _RTC_to_ASCII
-PUBLIC   _Concat_String
+;;PUBLIC   _Concat_String
 ;PUBLIC	 _Send_STR_To_Terminal
 ;PUBLIC	 _Conv_ItoA
-PUBLIC   _Conv_Tab
+;PUBLIC   _Conv_Tab
 PUBLIC   _Tri_Tab_histo
 PUBLIC   _Extract_Tab_histo
 PUBLIC   _String_code_nbre

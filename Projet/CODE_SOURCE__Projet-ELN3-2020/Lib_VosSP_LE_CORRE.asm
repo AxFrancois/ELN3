@@ -161,7 +161,7 @@ _Read_BP_Alarm:
 		MOV DPH,R6; On met les poids forts dans R6
 		
 		MOVX A,@dptr 
-		ANL A,#00100000
+		ANL A,#20h
 		JZ BP_Alarm_0 ;Jump si accumulateur est à 0
 		SETB C; Passe le bit de carry a 1
 		
